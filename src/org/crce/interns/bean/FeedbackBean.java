@@ -2,11 +2,15 @@ package org.crce.interns.bean;
 
 import java.util.Date;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
 public class FeedbackBean {
 
 	String username;
+	 
 	String feeback;
-	String company;
+		String company;
 	public String getUsername() {
 		return username;
 	}

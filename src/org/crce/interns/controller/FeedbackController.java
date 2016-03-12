@@ -6,9 +6,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -18,6 +24,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.crce.interns.bean.FeedbackBean;
 import org.crce.interns.model.Feedback;
 import org.crce.interns.service.FeedbackService;
+import org.crce.interns.validator.FeedbackFormValidator;
 
 @Controller
 public class FeedbackController {
@@ -26,8 +33,14 @@ public class FeedbackController {
 	@Autowired
 	private FeedbackService feedbackService;
 	
-	
-
+	@Autowired
+    FeedbackFormValidator validator;
+	/*@InitBinder
+	private void initBinder(WebDataBinder binder) {
+		binder.setValidator(validator);
+	}
+*/
+   
 	@RequestMapping(value="/feedback", method = RequestMethod.GET)
 	public ModelAndView listFeedback() {
 		Map<String, Object> model = new HashMap<String, Object>();
@@ -35,22 +48,31 @@ public class FeedbackController {
 		
 		return new ModelAndView("feedbackList", model);
 	}
-	@RequestMapping(value = "/save", method = RequestMethod.POST)
+	@RequestMapping(value = "/addFeedback", method = RequestMethod.GET)
 	public ModelAndView saveEmployee(@ModelAttribute("command") FeedbackBean feedbackBean, 
 			BindingResult result) {
 		System.out.println("in controller1");
-		Feedback feedback = prepareModel(feedbackBean);
-		feedbackService.addFeedback(feedback);
-		System.out.println("in controller1");
-		return new ModelAndView("redirect:/addFeedback.html");
+		//Feedback feedback = prepareModel(feedbackBean);
+		//feedbackService.addFeedback(feedback);
+		//System.out.println("in controller1");
+		return new ModelAndView("addFeedback");
 	}
 
-	@RequestMapping(value = "/addFeedback", method = RequestMethod.GET)  
-	 public ModelAndView addEmployee(@ModelAttribute("command")FeedbackBean feedbackBean,  
-	   BindingResult result) {  
-	  Map<String, Object> model = new HashMap<String, Object>();  
-	  model.put("feedback",  prepareListofBean(feedbackService.listFeedback()));  
-	  return new ModelAndView("addFeedback", model);  
+	@RequestMapping(value = "/save", method = RequestMethod.POST)  
+	 public ModelAndView addEmployee(  @ModelAttribute("command")FeedbackBean feedbackBean,  
+	   BindingResult result) { 
+		//validating
+		validator.validate(feedbackBean, result);
+				if (result.hasErrors()) {
+			System.out.println("Error in form");
+            
+            return new ModelAndView("addFeedback");
+        }
+				Feedback feedback = prepareModel(feedbackBean);
+				feedbackService.addFeedback(feedback);
+	 // Map<String, Object> model = new HashMap<String, Object>();  
+	 // model.put("feedback",  prepareListofBean(feedbackService.listFeedback()));  
+	  return new ModelAndView("feedbackSaveSuccess");  
 	 }  
 	
 	

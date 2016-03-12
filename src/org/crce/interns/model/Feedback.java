@@ -7,6 +7,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 @Entity
 @Table(name="feedbacks")
 public class Feedback implements Serializable {
@@ -14,8 +16,12 @@ public class Feedback implements Serializable {
 	
 	@Id
 	@Column(name = "usernamenew", nullable = false)
+	 @NotNull 
+	 
 	String username;
+	 @Size(min=2, max=500)
 	String feeback;
+	 @NotNull
 	String company;
 	
 	public String getUsername() {

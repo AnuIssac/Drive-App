@@ -6,7 +6,14 @@
 <html>  
  <head>  
   <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">  
-  <title>Feedback</title>  
+  <title>Feedback</title>
+  <style>
+.error {
+	color: #ff0000;
+	font-style: italic;
+	font-weight: bold;
+}
+</style>  
  </head>  
  <body>  
   <h2>Add Feedback Data</h2>  
@@ -15,14 +22,17 @@
        <tr>  
            <td><form:label path="username">User name:</form:label></td>  
            <td><form:input path="username" /></td>  
+           <td><form:errors path="username" cssClass="error" /></td>
        </tr>  
        <tr>  
            <td><form:label path="feeback">Feedback:</form:label></td>  
            <td><form:input path="feeback" /></td>  
+           <td><form:errors path="feeback" cssClass="error" /></td>
        </tr>  
        <tr>  
            <td><form:label path="company">Company:</form:label></td>  
-           <td><form:input path="company" /></td>  
+           <td><form:input path="company" /></td> 
+           <td><form:errors path="company" cssClass="error" /></td> 
        </tr>  
           <tr>  
          <td colspan="2"><input type="submit" value="Submit"/></td>  

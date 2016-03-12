@@ -48,6 +48,17 @@ http://www.springframework.org/schema/tx/spring-tx-3.0.xsd">
 			</props>
 		</property>
 	</bean>
+	
+	
+<bean id="feedbackValidator" class="org.crce.interns.validator.FeedbackFormValidator" />
+	
+	<bean id="messageSource"
+        class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+ 
+        <property name="basename" value="/WEB-INF/message_en" />
+        <property name="cacheSeconds" value="1" />
+    </bean>
+  
 
 	<bean id="hibernateTransactionManager"
 		class="org.springframework.orm.hibernate3.HibernateTransactionManager">
