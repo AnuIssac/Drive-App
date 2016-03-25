@@ -1,4 +1,4 @@
-package org.crce.interns.validator;
+package org.crce.interns.validators;
 
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;

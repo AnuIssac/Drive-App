@@ -1,4 +1,4 @@
-package org.crce.interns.service;
+package org.crce.interns.service.impl;
 
 import java.util.List;
 
@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 
 import org.crce.interns.model.*;
+import org.crce.interns.service.FeedbackService;
 import org.crce.interns.dao.FeedbackDao;
 
 @Service("feedbackService")

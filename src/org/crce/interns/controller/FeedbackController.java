@@ -24,7 +24,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.crce.interns.bean.FeedbackBean;
 import org.crce.interns.model.Feedback;
 import org.crce.interns.service.FeedbackService;
-import org.crce.interns.validator.FeedbackFormValidator;
+import org.crce.interns.validators.FeedbackFormValidator;
 
 @Controller
 public class FeedbackController {
@@ -70,9 +70,9 @@ public class FeedbackController {
         }
 				Feedback feedback = prepareModel(feedbackBean);
 				feedbackService.addFeedback(feedback);
-	 // Map<String, Object> model = new HashMap<String, Object>();  
-	 // model.put("feedback",  prepareListofBean(feedbackService.listFeedback()));  
-	  return new ModelAndView("feedbackSaveSuccess");  
+	  Map<String, Object> model = new HashMap<String, Object>();  
+	 model.put("feedback",  prepareList(feedbackService.listFeedback(),feedbackBean.getCompany()));  
+	  return new ModelAndView("feedbackSaveSuccess",model);  
 	 }  
 	
 	
@@ -111,6 +111,27 @@ public class FeedbackController {
 		return feedback;
 	}
 	
+	private List<FeedbackBean> prepareList(List<Feedback> feedback,String company){
+		List<FeedbackBean> beans = null;
+		if(feedback != null && !feedback.isEmpty()){
+			beans = new ArrayList<FeedbackBean>();
+			FeedbackBean bean = null;
+			for(Feedback a : feedback){
+				if(company.equals(a.getCompany()))
+				{
+				bean = new FeedbackBean();
+				bean.setUsername(a.getUsername());
+				bean.setCompany(a.getCompany());
+				bean.setFeeback(a.getFeeback());
+				
+						beans.add(bean);}
+				else continue;
+			}
+
+		}
+		return beans;
+	}
+
 	
 	
 }
