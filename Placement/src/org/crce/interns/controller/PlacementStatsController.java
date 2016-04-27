@@ -95,6 +95,13 @@ public class PlacementStatsController {
 	
 	private PlacementStats prepareModel(PlacementStatsBean addplacementstatsBean){
 		PlacementStats addplacementstats = new PlacementStats();
+		//----------------------------------------------------------
+		///*
+		instead of the below code, use this:
+		BeanUtils.copyProperties(addplacementstats, addplacementstatsBean);
+		//*/
+		//----------------------------------------------------------
+		/*
 		addplacementstats.setPlacment_stats_id(addplacementstatsBean.getPlacment_stats_id());
 		
 		addplacementstats.setCompany_id(addplacementstatsBean.getCompany_id());
@@ -123,7 +130,7 @@ public class PlacementStatsController {
 		
 		addplacementstats.setModified_date(addplacementstatsBean.getModified_date());
 		
-		
+		*/
 		return addplacementstats;
 	}
 	
