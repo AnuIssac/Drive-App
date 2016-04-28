@@ -1,44 +1,39 @@
 package org.crce.interns.controller;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.validation.Valid;
-
+import org.crce.interns.bean.PlacementStatsBean;
+import org.crce.interns.bean.QuickStatsBean;
+import org.crce.interns.model.PlacementStats;
+import org.crce.interns.model.QuickStats;
+import org.crce.interns.service.PlacementStatsService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.Validator;
-import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-
-import org.crce.interns.bean.PlacementStatsBean;
-import org.crce.interns.bean.QuickStatsBean;
-import org.crce.interns.dao.impl.PlacementStatsDaoImpl.Branch;
-import org.crce.interns.model.PlacementStats;
-import org.crce.interns.model.QuickStats;
-import org.crce.interns.service.PlacementStatsService;
-
-@Controller("placementStatsController")
+@Controller
 public class PlacementStatsController {
 
 	@Autowired
-	private PlacementStatsService placementstatsService;
+	private PlacementStatsService placementStatsService;
 	
+	@RequestMapping(value = "/", method = RequestMethod.GET)
+	public ModelAndView welcome() {
+		System.out.println("index");
+		return new ModelAndView("index");
+	}
 	
 	@RequestMapping(value="/stats.html", method = RequestMethod.GET)
 	public ModelAndView listPlacementStats() {
 		Map<String, Object> model = new HashMap<String, Object>();
-		model.put("placementstats",prepareListofBean(placementstatsService.listPlacementStats()));
+		model.put("placementstats",prepareListofBean(placementStatsService.listPlacementStats()));
 		
 		return new ModelAndView("psList", model);
 	}
@@ -47,7 +42,7 @@ public class PlacementStatsController {
 	 public ModelAndView generateStatus(@ModelAttribute PlacementStats placementstats ) { 
 		//PlacementStats placementstats = null;
 		
-		placementstatsService.addPlacementStats(placementstats);
+		placementStatsService.addPlacementStats(placementstats);
 		
 	
 		
@@ -57,11 +52,7 @@ public class PlacementStatsController {
 	
 	
 	
-	@RequestMapping(value = "/index.html", method = RequestMethod.GET)
-	public ModelAndView welcome() {
-		System.out.println("index");
-		return new ModelAndView("index");
-	}
+	
 	
 	private List<PlacementStatsBean> prepareListofBean(List<PlacementStats> addplacementstats){
 		List<PlacementStatsBean> beans = null;
@@ -97,7 +88,7 @@ public class PlacementStatsController {
 		PlacementStats addplacementstats = new PlacementStats();
 		//----------------------------------------------------------
 		///*
-		instead of the below code, use this:
+		//instead of the below code, use this:
 		BeanUtils.copyProperties(addplacementstats, addplacementstatsBean);
 		//*/
 		//----------------------------------------------------------

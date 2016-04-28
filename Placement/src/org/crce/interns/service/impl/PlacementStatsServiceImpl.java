@@ -6,23 +6,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-
-
 import org.crce.interns.model.*;
 import org.crce.interns.service.PlacementStatsService;
-import org.crce.interns.bean.QuickStatsBean;
 import org.crce.interns.dao.PlacementStatsDao;
-import org.crce.interns.dao.impl.PlacementStatsDaoImpl.Branch;
+
 
 
 @Service("placementStatsService")
 @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 public class PlacementStatsServiceImpl implements PlacementStatsService {
-	public enum Branch { Computer,Electronics,IT,Production }  
-
+	
+	public enum Branch { Computer,Electronics,IT,Production };  
 	
 	@Autowired
-	private PlacementStatsDao placementstatsDao;
+	private PlacementStatsDao placementStatsDao;
 	
 	@Transactional(propagation = Propagation.REQUIRED, readOnly = false)
 	public void addPlacementStats(PlacementStats placementstats) {
@@ -30,7 +27,7 @@ public class PlacementStatsServiceImpl implements PlacementStatsService {
 		
 			for( Branch b:Branch.values())
 			{
-		List<QuickStats> a=placementstatsDao.listQuickStats(b.toString());
+		List<QuickStats> a=placementStatsDao.listQuickStats(b.toString());
 			int n=a.size();//total placed in that branch
 			cid=a.get(0).getCompany_id();
 			
@@ -46,7 +43,7 @@ public class PlacementStatsServiceImpl implements PlacementStatsService {
 			placementstats.setBranch(b.toString());
 		placementstats.setCompany_id(cid);
 		placementstats.setNo_selected(count);
-		placementstatsDao.addPlacementStats(placementstats);
+		placementStatsDao.addPlacementStats(placementstats);
 		   count=0;
 		cid=a.get(i).getCompany_id();
 		if(i==n-1)
@@ -56,15 +53,15 @@ public class PlacementStatsServiceImpl implements PlacementStatsService {
 		}
 		
 		
-			}
+	}
 	
 	public List<PlacementStats> listPlacementStats() {
 		
-			return placementstatsDao.listPlacementStats();
+			return placementStatsDao.listPlacementStats();
 	}
   
 	public List<QuickStats> listQuickStats(String branch){
-		return placementstatsDao.listQuickStats(branch);
+		return placementStatsDao.listQuickStats(branch);
 	}
 	
 }

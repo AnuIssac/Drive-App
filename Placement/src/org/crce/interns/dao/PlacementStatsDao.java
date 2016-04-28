@@ -1,7 +1,5 @@
 package org.crce.interns.dao;
 
-import java.io.IOException;
-import java.sql.SQLException;
 import java.util.List;
 
 import org.crce.interns.model.*;
