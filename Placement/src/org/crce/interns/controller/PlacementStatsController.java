@@ -5,8 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.crce.interns.bean.PlacementStatsBean;
-import org.crce.interns.bean.QuickStatsBean;
+import org.crce.interns.beans.PlacementStatsBean;
+import org.crce.interns.beans.QuickStatsBean;
 import org.crce.interns.model.PlacementStats;
 import org.crce.interns.model.QuickStats;
 import org.crce.interns.service.PlacementStatsService;
