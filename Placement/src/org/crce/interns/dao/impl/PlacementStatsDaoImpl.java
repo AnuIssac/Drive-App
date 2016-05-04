@@ -20,12 +20,17 @@ public class PlacementStatsDaoImpl implements PlacementStatsDao {
 	
 	//
 	
+	Session session ;
+	
 	public enum Branch { Computer,Electronics,IT,Production } ; 
 	
 	
 	@SuppressWarnings("unchecked")
 	public List<PlacementStats> listPlacementStats() {
-		List<PlacementStats> list = sessionFactory.getCurrentSession().createCriteria(PlacementStats.class).list();
+		
+		this.session = sessionFactory.openSession();
+		
+		List<PlacementStats> list = session.createCriteria(PlacementStats.class).list();
 		
 		System.out.println("inside dao size of list = " + list.size());
 		
@@ -35,7 +40,6 @@ public class PlacementStatsDaoImpl implements PlacementStatsDao {
 	public void addPlacementStats(PlacementStats placementstats) {
 		
 		
-		
 		sessionFactory.getCurrentSession().saveOrUpdate(placementstats);
 		
 }
@@ -43,7 +47,7 @@ public class PlacementStatsDaoImpl implements PlacementStatsDao {
 	public List<QuickStats> listQuickStats(String s) {
 		//List<QuickStats> list = sessionFactory.getCurrentSession().createCriteria(PlacementStats.class).list();
 		
-		Session session = sessionFactory.openSession();
+		
 		String hql = "FROM placement_statistics_schema.quick_stats WHERE branch='s' " +
 	             "ORDER BY company_id";
 		
